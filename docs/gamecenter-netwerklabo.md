@@ -393,6 +393,12 @@ Te configureren:
 
 ### Uitgevoerde configuraties
 
+### Uitgevoerde configuratie SW-K-D
+
+De stap-voor-stapconfiguratie van de distributieswitch aan de klantenkant staat in:
+
+[Configuratie van SW-K-D](configuraties/sw-k-d/README.md)
+
 | Datum | Apparaat | Uitgevoerde configuratie | Uitgevoerd door | Gecontroleerd door | Opmerkingen |
 |---|---|---|---|---|---|
 | TBD | TBD | TBD | TBD | TBD | TBD |
