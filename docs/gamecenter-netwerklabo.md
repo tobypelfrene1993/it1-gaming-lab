@@ -51,8 +51,6 @@ De router heeft een rechtstreeks aangesloten interface in elk subnet. Routerinte
 
 De centrale switches verbinden de router met de toegangsswitches. De toegangsswitches verbinden de eindapparaten met het juiste subnet. De exacte benaming van de routerinterfaces moet later worden gecontroleerd zodra het routermodel bekend is. In deze versie worden de klassikaal afgesproken namen `FastEthernet0/1` en `FastEthernet0/2` gebruikt.
 
-Controleer later op welke SVI de management-IP-adressen van de switches ingesteld moeten worden. Zolang dit niet klassikaal werd bepaald, is de SVI: `TBD`.
-
 ## 5. Topologiediagram
 
 ![Netwerkarchitectuur van het gamecenter](assets/gamecenter-netwerkarchitectuur.svg)
@@ -227,7 +225,6 @@ Te configureren:
 - management-IP `192.168.10.2`;
 - subnetmasker `255.255.255.0`;
 - default gateway `192.168.10.1`;
-- SVI voor management-IP: `TBD`;
 - poorten `FastEthernet0/1`, `FastEthernet0/2` en `FastEthernet0/24` controleren en activeren indien nodig.
 
 Definitieve Cisco IOS-configuratie: `TBD`.
@@ -240,7 +237,6 @@ Te configureren:
 - management-IP `192.168.10.3`;
 - subnetmasker `255.255.255.0`;
 - default gateway `192.168.10.1`;
-- SVI voor management-IP: `TBD`;
 - poorten `FastEthernet0/1`, `FastEthernet0/2` en `FastEthernet0/24` controleren en activeren indien nodig.
 
 Definitieve Cisco IOS-configuratie: `TBD`.
@@ -253,7 +249,6 @@ Te configureren:
 - management-IP `192.168.10.4`;
 - subnetmasker `255.255.255.0`;
 - default gateway `192.168.10.1`;
-- SVI voor management-IP: `TBD`;
 - poorten `FastEthernet0/1`, `FastEthernet0/2` en `FastEthernet0/24` controleren en activeren indien nodig.
 
 Definitieve Cisco IOS-configuratie: `TBD`.
@@ -266,7 +261,6 @@ Te configureren:
 - management-IP `192.168.20.2`;
 - subnetmasker `255.255.255.0`;
 - default gateway `192.168.20.1`;
-- SVI voor management-IP: `TBD`;
 - poorten `FastEthernet0/1`, `FastEthernet0/2` en `FastEthernet0/24` controleren en activeren indien nodig.
 
 Definitieve Cisco IOS-configuratie: `TBD`.
@@ -279,7 +273,6 @@ Te configureren:
 - management-IP `192.168.20.3`;
 - subnetmasker `255.255.255.0`;
 - default gateway `192.168.20.1`;
-- SVI voor management-IP: `TBD`;
 - poorten `FastEthernet0/1`, `FastEthernet0/2`, `FastEthernet0/3` en `FastEthernet0/24` controleren en activeren indien nodig.
 
 Definitieve Cisco IOS-configuratie: `TBD`.
@@ -292,7 +285,6 @@ Te configureren:
 - management-IP `192.168.20.4`;
 - subnetmasker `255.255.255.0`;
 - default gateway `192.168.20.1`;
-- SVI voor management-IP: `TBD`;
 - poorten `FastEthernet0/1`, `FastEthernet0/2` en `FastEthernet0/24` controleren en activeren indien nodig.
 
 Definitieve Cisco IOS-configuratie: `TBD`.
@@ -392,7 +384,6 @@ Te configureren:
 | Fout subnetmasker | Subnetmasker wijkt af van `255.255.255.0` | IP-configuratie controleren | Subnetmasker corrigeren naar `255.255.255.0` |
 | Fout ingestelde default gateway | Gateway wijkt af van `.1` in het juiste subnet | IP-configuratie controleren | Gateway corrigeren naar `192.168.10.1` of `192.168.20.1` |
 | Dubbel IP-adres | Twee apparaten gebruiken hetzelfde IP-adres | IP-adressen vergelijken en ARP-meldingen controleren | Uniek IP-adres instellen volgens plan |
-| Managementinterface van de switch is down | SVI is down of verkeerd gekozen | `show ip interface brief` controleren | Juiste SVI bepalen en activeren: `TBD` |
 | Windows Firewall blokkeert ICMP/ping | ICMP echo requests worden geblokkeerd | Firewallinstellingen controleren | ICMP tijdelijk toestaan volgens klasafspraken |
 | Netwerkadapter van een eindapparaat is uitgeschakeld | Adapter staat disabled | Netwerkinstellingen van het apparaat controleren | Adapter inschakelen |
 | Configuratie werd niet opgeslagen | Running-config is niet naar startup-config geschreven | Na herstart controleren of configuratie behouden bleef | Configuratie opslaan volgens klasafspraken |
@@ -430,16 +421,16 @@ Te configureren:
 |---|---|---|---|---|---|---|---|
 | Routerinterface personeelskant | `R1 - interface personeelskant` | `192.168.10.1` | TBD | TBD | TBD | TBD | Routermodel nog onbekend |
 | Routerinterface klantenkant | `R1 - interface klantenkant` | `192.168.20.1` | TBD | TBD | TBD | TBD | Routermodel nog onbekend |
-| Centrale switch personeelskant | `SW-P-D` | `192.168.10.2` | TBD | TBD | TBD | TBD | SVI voor management-IP: `TBD` |
-| Switch kassa en beheer | `SW-P-1` | `192.168.10.3` | TBD | TBD | TBD | TBD | SVI voor management-IP: `TBD` |
-| Switch servers | `SW-P-2` | `192.168.10.4` | TBD | TBD | TBD | TBD | SVI voor management-IP: `TBD` |
+| Centrale switch personeelskant | `SW-P-D` | `192.168.10.2` | TBD | TBD | TBD | TBD | TBD |
+| Switch kassa en beheer | `SW-P-1` | `192.168.10.3` | TBD | TBD | TBD | TBD | TBD |
+| Switch servers | `SW-P-2` | `192.168.10.4` | TBD | TBD | TBD | TBD | TBD |
 | Kassasysteem | `KASSA` | `192.168.10.5` | TBD | Niet van toepassing | TBD | TBD | TBD |
 | Beheerlaptop | `LAPTOP` | `192.168.10.6` | TBD | Niet van toepassing | TBD | TBD | TBD |
 | Eerste server | `SERVER1` | `192.168.10.7` | TBD | Niet van toepassing | TBD | TBD | TBD |
 | Tweede server | `SERVER2` | `192.168.10.8` | TBD | Niet van toepassing | TBD | TBD | TBD |
-| Centrale switch klantenkant | `SW-K-D` | `192.168.20.2` | TBD | TBD | TBD | TBD | SVI voor management-IP: `TBD` |
-| Switch gaming-pc's | `SW-K-1` | `192.168.20.3` | TBD | TBD | TBD | TBD | SVI voor management-IP: `TBD` |
-| Switch arcadekasten | `SW-K-2` | `192.168.20.4` | TBD | TBD | TBD | TBD | SVI voor management-IP: `TBD` |
+| Centrale switch klantenkant | `SW-K-D` | `192.168.20.2` | TBD | TBD | TBD | TBD | TBD |
+| Switch gaming-pc's | `SW-K-1` | `192.168.20.3` | TBD | TBD | TBD | TBD | TBD |
+| Switch arcadekasten | `SW-K-2` | `192.168.20.4` | TBD | TBD | TBD | TBD | TBD |
 | Gaming-pc 1 | `PC1` | `192.168.20.5` | TBD | Niet van toepassing | TBD | TBD | TBD |
 | Gaming-pc 2 | `PC2` | `192.168.20.6` | TBD | Niet van toepassing | TBD | TBD | TBD |
 | Gaming-pc 3 | `PC3` | `192.168.20.7` | TBD | Niet van toepassing | TBD | TBD | TBD |
@@ -452,7 +443,6 @@ Te configureren:
 - Zijn de routerinterfaces werkelijk `FastEthernet0/1` en `FastEthernet0/2`?
 - Welke IOS-versie draait op de router?
 - Welke IOS-versie draait op de switches?
-- Op welke SVI wordt het management-IP van iedere switch ingesteld?
 - Welke kabeltypes worden exact gebruikt?
 - Welke consolekabel of USB-adapter wordt gebruikt?
 - Moet SSH worden ingesteld?
@@ -468,4 +458,4 @@ Dit voorlopige ontwerp bestaat uit twee afzonderlijke `/24`-subnetten: het perso
 
 Ieder subnet bevat drie switches. Aan de personeelskant zijn dat `SW-P-D`, `SW-P-1` en `SW-P-2`. Aan de klantenkant zijn dat `SW-K-D`, `SW-K-1` en `SW-K-2`.
 
-De praktische configuratie, de exacte apparaatmodellen, de gekozen SVI's voor management-IP-adressen en de testresultaten worden later aangevuld zodra deze gegevens klassikaal bevestigd en uitgevoerd zijn.
+De praktische configuratie, de exacte apparaatmodellen en de testresultaten worden later aangevuld zodra deze gegevens klassikaal bevestigd en uitgevoerd zijn.
