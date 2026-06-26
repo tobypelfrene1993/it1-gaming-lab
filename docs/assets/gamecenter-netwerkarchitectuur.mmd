@@ -3,39 +3,39 @@ flowchart TB
     R["Router<br/>Model: TBD"]:::router
 
     subgraph PERS["Personeelsnetwerk 192.168.10.0/24"]
-        R_F01["ROUTER-F0-1<br/>FastEthernet0/1<br/>192.168.10.1"]:::routerInterface
-        P_CORE["SW-PERS-CORE<br/>192.168.10.2"]:::switchNode
-        P_KASSA["SW-PERS-KASSA<br/>192.168.10.3"]:::switchNode
-        P_SERVERS["SW-PERS-SERVERS<br/>192.168.10.4"]:::switchNode
-        KASSA["KASSA-01<br/>192.168.10.5"]:::endpoint
-        LAPTOP["LAPTOP-BEHEER<br/>192.168.10.6"]:::endpoint
-        SERVER1["SERVER-01<br/>192.168.10.7"]:::endpoint
-        SERVER2["SERVER-02<br/>192.168.10.8"]:::endpoint
+        R_F01["R1 - interface personeelskant<br/>FastEthernet0/1<br/>192.168.10.1"]:::routerInterface
+        P_CORE["SW-P-D<br/>192.168.10.2"]:::switchNode
+        P_KASSA["SW-P-1<br/>192.168.10.3"]:::switchNode
+        P_SERVERS["SW-P-2<br/>192.168.10.4"]:::switchNode
+        KASSA["KASSA<br/>192.168.10.5"]:::endpoint
+        LAPTOP["LAPTOP<br/>192.168.10.6"]:::endpoint
+        SERVER1["SERVER1<br/>192.168.10.7"]:::endpoint
+        SERVER2["SERVER2<br/>192.168.10.8"]:::endpoint
     end
 
     subgraph KLANT["Klantennetwerk 192.168.20.0/24"]
-        R_F02["ROUTER-F0-2<br/>FastEthernet0/2<br/>192.168.20.1"]:::routerInterface
-        K_CORE["SW-KLANT-CORE<br/>192.168.20.2"]:::switchNode
-        K_PC["SW-KLANT-PC<br/>192.168.20.3"]:::switchNode
-        K_ARCADE["SW-KLANT-ARCADE<br/>192.168.20.4"]:::switchNode
-        PC1["PC-01<br/>192.168.20.5"]:::endpoint
-        PC2["PC-02<br/>192.168.20.6"]:::endpoint
-        PC3["PC-03<br/>192.168.20.7"]:::endpoint
-        ARCADE1["ARCADE-01<br/>192.168.20.8"]:::endpoint
-        ARCADE2["ARCADE-02<br/>192.168.20.9"]:::endpoint
+        R_F02["R1 - interface klantenkant<br/>FastEthernet0/2<br/>192.168.20.1"]:::routerInterface
+        K_CORE["SW-K-D<br/>192.168.20.2"]:::switchNode
+        K_PC["SW-K-1<br/>192.168.20.3"]:::switchNode
+        K_ARCADE["SW-K-2<br/>192.168.20.4"]:::switchNode
+        PC1["PC1<br/>192.168.20.5"]:::endpoint
+        PC2["PC2<br/>192.168.20.6"]:::endpoint
+        PC3["PC3<br/>192.168.20.7"]:::endpoint
+        ARCADE1["ARCADE1<br/>192.168.20.8"]:::endpoint
+        ARCADE2["ARCADE2<br/>192.168.20.9"]:::endpoint
     end
 
     TITLE ~~~ R
     R --- R_F01
     R --- R_F02
-    R_F01 ---|"Router FastEthernet0/1 naar SW-PERS-CORE FastEthernet0/24"| P_CORE
+    R_F01 ---|"Router FastEthernet0/1 naar SW-P-D FastEthernet0/24"| P_CORE
     P_CORE ---|"FastEthernet0/1 naar FastEthernet0/24"| P_KASSA
     P_CORE ---|"FastEthernet0/2 naar FastEthernet0/24"| P_SERVERS
     P_KASSA ---|"FastEthernet0/1 naar Ethernetpoort"| KASSA
     P_KASSA ---|"FastEthernet0/2 naar Ethernetpoort"| LAPTOP
     P_SERVERS ---|"FastEthernet0/1 naar Ethernetpoort"| SERVER1
     P_SERVERS ---|"FastEthernet0/2 naar Ethernetpoort"| SERVER2
-    R_F02 ---|"Router FastEthernet0/2 naar SW-KLANT-CORE FastEthernet0/24"| K_CORE
+    R_F02 ---|"Router FastEthernet0/2 naar SW-K-D FastEthernet0/24"| K_CORE
     K_CORE ---|"FastEthernet0/1 naar FastEthernet0/24"| K_PC
     K_CORE ---|"FastEthernet0/2 naar FastEthernet0/24"| K_ARCADE
     K_PC ---|"FastEthernet0/1 naar Ethernetpoort"| PC1
