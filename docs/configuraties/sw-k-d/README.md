@@ -2,10 +2,10 @@
 
 # Configuratie van SW-K-D
 
-Status: `In uitvoering`  
-Apparaat: `SW-K-D`  
-Laatste fase: basisconfiguratie en management-IP  
-Praktijktests: nog verder aan te vullen
+> **Status:** In uitvoering
+> **Apparaat:** SW-K-D
+> **Laatste fase:** basisconfiguratie en management-IP
+> **Praktijktests:** nog verder aan te vullen
 
 ## 1. Apparaatgegevens
 

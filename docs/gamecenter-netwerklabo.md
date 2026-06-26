@@ -406,6 +406,12 @@ De stap-voor-stapconfiguratie van de distributieswitch aan de klantenkant staat 
 
 [Configuratie van SW-K-D](configuraties/sw-k-d/README.md)
 
+### Fabrieksreset na het labo
+
+De afzonderlijke procedure voor het terugzetten van de Cisco 1841-router en Cisco Catalyst-switches staat hier:
+
+[Fabrieksreset van router en switches](procedures/fabrieksreset/README.md)
+
 | Datum | Apparaat | Uitgevoerde configuratie | Uitgevoerd door | Gecontroleerd door | Opmerkingen |
 |---|---|---|---|---|---|
 | TBD | TBD | TBD | TBD | TBD | TBD |

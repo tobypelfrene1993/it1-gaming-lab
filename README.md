@@ -25,6 +25,13 @@ Beide netwerken worden via één fysieke router met elkaar verbonden.
 
 [Open het documentatieoverzicht](docs/README.md)
 
+## Snel naar
+
+- [Netwerkarchitectuur](docs/assets/gamecenter-netwerkarchitectuur.svg)
+- [Configuratie van R1](docs/configuraties/r1/README.md)
+- [Configuratie van SW-K-D](docs/configuraties/sw-k-d/README.md)
+- [Fabrieksresetprocedure](docs/procedures/fabrieksreset/README.md)
+
 ## Belangrijke regels
 
 - Wijzig geen IP-adressen.
