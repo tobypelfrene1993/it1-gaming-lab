@@ -1,9 +1,9 @@
 flowchart TB
     TITLE["Netwerkarchitectuur Gamecenter<br/>Huidige klassikale situatie"]:::diagramTitle
-    R["Router<br/>Model: TBD"]:::router
+    R["R1<br/>Cisco 1841"]:::router
 
     subgraph PERS["Personeelsnetwerk 192.168.10.0/24"]
-        R_F01["R1 - interface personeelskant<br/>FastEthernet0/1<br/>192.168.10.1"]:::routerInterface
+        R_F01["R1 - interface personeelskant<br/>FastEthernet0/0<br/>192.168.10.1"]:::routerInterface
         P_CORE["SW-P-D<br/>192.168.10.2"]:::switchNode
         P_KASSA["SW-P-1<br/>192.168.10.3"]:::switchNode
         P_SERVERS["SW-P-2<br/>192.168.10.4"]:::switchNode
@@ -14,7 +14,7 @@ flowchart TB
     end
 
     subgraph KLANT["Klantennetwerk 192.168.20.0/24"]
-        R_F02["R1 - interface klantenkant<br/>FastEthernet0/2<br/>192.168.20.1"]:::routerInterface
+        R_F02["R1 - interface klantenkant<br/>FastEthernet0/1<br/>192.168.20.1"]:::routerInterface
         K_CORE["SW-K-D<br/>192.168.20.2"]:::switchNode
         K_PC["SW-K-1<br/>192.168.20.3"]:::switchNode
         K_ARCADE["SW-K-2<br/>192.168.20.4"]:::switchNode
@@ -28,14 +28,14 @@ flowchart TB
     TITLE ~~~ R
     R --- R_F01
     R --- R_F02
-    R_F01 ---|"Router FastEthernet0/1 naar SW-P-D FastEthernet0/24"| P_CORE
+    R_F01 ---|"Router FastEthernet0/0 naar SW-P-D FastEthernet0/24"| P_CORE
     P_CORE ---|"FastEthernet0/1 naar FastEthernet0/24"| P_KASSA
     P_CORE ---|"FastEthernet0/2 naar FastEthernet0/24"| P_SERVERS
     P_KASSA ---|"FastEthernet0/1 naar Ethernetpoort"| KASSA
     P_KASSA ---|"FastEthernet0/2 naar Ethernetpoort"| LAPTOP
     P_SERVERS ---|"FastEthernet0/1 naar Ethernetpoort"| SERVER1
     P_SERVERS ---|"FastEthernet0/2 naar Ethernetpoort"| SERVER2
-    R_F02 ---|"Router FastEthernet0/2 naar SW-K-D FastEthernet0/24"| K_CORE
+    R_F02 ---|"Router FastEthernet0/1 naar SW-K-D FastEthernet0/24"| K_CORE
     K_CORE ---|"FastEthernet0/1 naar FastEthernet0/24"| K_PC
     K_CORE ---|"FastEthernet0/2 naar FastEthernet0/24"| K_ARCADE
     K_PC ---|"FastEthernet0/1 naar Ethernetpoort"| PC1

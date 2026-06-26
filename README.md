@@ -23,6 +23,8 @@ Beide netwerken worden via één fysieke router met elkaar verbonden.
 
 [Open de volledige documentatie](docs/gamecenter-netwerklabo.md)
 
+[Open het documentatieoverzicht](docs/README.md)
+
 ## Belangrijke regels
 
 - Wijzig geen IP-adressen.

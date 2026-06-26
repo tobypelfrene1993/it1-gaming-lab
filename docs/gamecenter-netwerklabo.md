@@ -26,7 +26,7 @@ De doelstellingen van dit labo zijn:
 
 | Apparaat | Aantal | Merk en model | Functie | Status | Opmerkingen |
 |---|---:|---|---|---|---|
-| Router | 1 | TBD | Verbindt het personeelsnetwerk en het klantennetwerk | Gepland | Exact routermodel nog te bepalen |
+| Router | 1 | Cisco 1841 Integrated Services Router | Verbindt het personeelsnetwerk en het klantennetwerk | Gepland | Hostname: `R1` |
 | Switches | 6 | Cisco Catalyst WS-C3560-24PS-S | Layer 2-connectiviteit en management-IP per switch | Gepland | Verdeeld over personeelskant en klantenkant |
 | Kassasysteem | 1 | TBD | Kassawerkstation | Gepland | Hostname: `KASSA` |
 | Beheerlaptop | 1 | TBD | Beheer door medewerkers | Gepland | Hostname: `LAPTOP` |
@@ -45,11 +45,11 @@ Het labo bestaat uit twee afzonderlijke IPv4-subnetten:
 
 Apparaten binnen hetzelfde subnet communiceren via de switches. De switches sturen gewone Layer 2-frames door op basis van MAC-adressen. De IP-adressen van de switches zijn management-IP-adressen. Een management-IP-adres is nodig om een switch via het netwerk te beheren, maar is niet nodig om gewone Layer 2-frames door te sturen.
 
-De router heeft een rechtstreeks aangesloten interface in elk subnet. Routerinterface `FastEthernet0/1` is de gateway van het personeelsnetwerk. Routerinterface `FastEthernet0/2` is de gateway van het klantennetwerk. Omdat beide netwerken rechtstreeks op de router zijn aangesloten, kan de router verkeer tussen deze twee subnetten routeren. Voor deze twee rechtstreeks aangesloten netwerken zijn voorlopig geen extra statische routes nodig.
+De router heeft een rechtstreeks aangesloten interface in elk subnet. Routerinterface `FastEthernet0/0` is de gateway van het personeelsnetwerk. Routerinterface `FastEthernet0/1` is de gateway van het klantennetwerk. Omdat beide netwerken rechtstreeks op de router zijn aangesloten, kan de router verkeer tussen deze twee subnetten routeren. Voor deze twee rechtstreeks aangesloten netwerken zijn voorlopig geen extra statische routes nodig.
 
 `R1` is één fysieke router met twee interfaces. `R1 - interface personeelskant` gebruikt `192.168.10.1/24`. `R1 - interface klantenkant` gebruikt `192.168.20.1/24`. Het is dus correct dat dezelfde routerhostname `R1` bij beide routerinterfaces voorkomt.
 
-De centrale switches verbinden de router met de toegangsswitches. De toegangsswitches verbinden de eindapparaten met het juiste subnet. De exacte benaming van de routerinterfaces moet later worden gecontroleerd zodra het routermodel bekend is. In deze versie worden de klassikaal afgesproken namen `FastEthernet0/1` en `FastEthernet0/2` gebruikt.
+De centrale switches verbinden de router met de toegangsswitches. De toegangsswitches verbinden de eindapparaten met het juiste subnet. De bevestigde Cisco 1841-router gebruikt `FastEthernet0/0` voor de personeelskant en `FastEthernet0/1` voor de klantenkant.
 
 ## 5. Topologiediagram
 
@@ -62,10 +62,10 @@ Deze architectuur geeft de huidige klassikale situatie weer. De documentatie is 
 ```mermaid
 flowchart TB
     TITLE["Netwerkarchitectuur Gamecenter<br/>Huidige klassikale situatie"]:::diagramTitle
-    R["Router<br/>Model: TBD"]:::router
+    R["R1<br/>Cisco 1841"]:::router
 
     subgraph PERS["Personeelsnetwerk 192.168.10.0/24"]
-        R_F01["R1 - interface personeelskant<br/>FastEthernet0/1<br/>192.168.10.1"]:::routerInterface
+        R_F01["R1 - interface personeelskant<br/>FastEthernet0/0<br/>192.168.10.1"]:::routerInterface
         P_CORE["SW-P-D<br/>192.168.10.2"]:::switchNode
         P_KASSA["SW-P-1<br/>192.168.10.3"]:::switchNode
         P_SERVERS["SW-P-2<br/>192.168.10.4"]:::switchNode
@@ -76,7 +76,7 @@ flowchart TB
     end
 
     subgraph KLANT["Klantennetwerk 192.168.20.0/24"]
-        R_F02["R1 - interface klantenkant<br/>FastEthernet0/2<br/>192.168.20.1"]:::routerInterface
+        R_F02["R1 - interface klantenkant<br/>FastEthernet0/1<br/>192.168.20.1"]:::routerInterface
         K_CORE["SW-K-D<br/>192.168.20.2"]:::switchNode
         K_PC["SW-K-1<br/>192.168.20.3"]:::switchNode
         K_ARCADE["SW-K-2<br/>192.168.20.4"]:::switchNode
@@ -90,14 +90,14 @@ flowchart TB
     TITLE ~~~ R
     R --- R_F01
     R --- R_F02
-    R_F01 ---|"Router FastEthernet0/1 naar SW-P-D FastEthernet0/24"| P_CORE
+    R_F01 ---|"Router FastEthernet0/0 naar SW-P-D FastEthernet0/24"| P_CORE
     P_CORE ---|"FastEthernet0/1 naar FastEthernet0/24"| P_KASSA
     P_CORE ---|"FastEthernet0/2 naar FastEthernet0/24"| P_SERVERS
     P_KASSA ---|"FastEthernet0/1 naar Ethernetpoort"| KASSA
     P_KASSA ---|"FastEthernet0/2 naar Ethernetpoort"| LAPTOP
     P_SERVERS ---|"FastEthernet0/1 naar Ethernetpoort"| SERVER1
     P_SERVERS ---|"FastEthernet0/2 naar Ethernetpoort"| SERVER2
-    R_F02 ---|"Router FastEthernet0/2 naar SW-K-D FastEthernet0/24"| K_CORE
+    R_F02 ---|"Router FastEthernet0/1 naar SW-K-D FastEthernet0/24"| K_CORE
     K_CORE ---|"FastEthernet0/1 naar FastEthernet0/24"| K_PC
     K_CORE ---|"FastEthernet0/2 naar FastEthernet0/24"| K_ARCADE
     K_PC ---|"FastEthernet0/1 naar Ethernetpoort"| PC1
@@ -150,7 +150,7 @@ flowchart TB
 
 | Apparaat A | Poort A | Apparaat B | Poort B | Functie van de verbinding | Status |
 |---|---|---|---|---|---|
-| Router | `FastEthernet0/1` | `SW-P-D` | `FastEthernet0/24` | Verbinding tussen router en personeelsnetwerk | Gepland |
+| Router | `FastEthernet0/0` | `SW-P-D` | `FastEthernet0/24` | Verbinding tussen router en personeelsnetwerk | Gepland |
 | `SW-P-D` | `FastEthernet0/1` | `SW-P-1` | `FastEthernet0/24` | Verbinding naar kassa- en beheerswitch | Gepland |
 | `SW-P-D` | `FastEthernet0/2` | `SW-P-2` | `FastEthernet0/24` | Verbinding naar serverswitch | Gepland |
 | `SW-P-1` | `FastEthernet0/1` | `KASSA` | Ethernetpoort | Verbinding naar het kassasysteem | Gepland |
@@ -162,7 +162,7 @@ flowchart TB
 
 | Apparaat A | Poort A | Apparaat B | Poort B | Functie van de verbinding | Status |
 |---|---|---|---|---|---|
-| Router | `FastEthernet0/2` | `SW-K-D` | `FastEthernet0/24` | Verbinding tussen router en klantennetwerk | Gepland |
+| Router | `FastEthernet0/1` | `SW-K-D` | `FastEthernet0/24` | Verbinding tussen router en klantennetwerk | Gepland |
 | `SW-K-D` | `FastEthernet0/1` | `SW-K-1` | `FastEthernet0/24` | Verbinding naar de switch met gaming-pc's | Gepland |
 | `SW-K-D` | `FastEthernet0/2` | `SW-K-2` | `FastEthernet0/24` | Verbinding naar de arcadeswitch | Gepland |
 | `SW-K-1` | `FastEthernet0/1` | `PC1` | Ethernetpoort | Verbinding naar PC 1 | Gepland |
@@ -208,10 +208,10 @@ flowchart TB
 Te configureren:
 
 - hostname `R1`;
-- routermodel controleren: `TBD`;
-- interface `FastEthernet0/1` configureren met IP-adres `192.168.10.1` en subnetmasker `255.255.255.0`;
-- interface `FastEthernet0/2` configureren met IP-adres `192.168.20.1` en subnetmasker `255.255.255.0`;
-- controleren of de interfacenamen werkelijk `FastEthernet0/1` en `FastEthernet0/2` zijn;
+- routermodel: Cisco 1841 Integrated Services Router;
+- interface `FastEthernet0/0` configureren met IP-adres `192.168.10.1` en subnetmasker `255.255.255.0`;
+- interface `FastEthernet0/1` configureren met IP-adres `192.168.20.1` en subnetmasker `255.255.255.0`;
+- controleren dat de Cisco 1841-interfacenamen `FastEthernet0/0` en `FastEthernet0/1` gebruikt worden;
 - interfaces activeren indien ze administratief uitgeschakeld zijn;
 - configuratie opslaan na controle en toestemming.
 
@@ -384,6 +384,7 @@ Te configureren:
 | Fout subnetmasker | Subnetmasker wijkt af van `255.255.255.0` | IP-configuratie controleren | Subnetmasker corrigeren naar `255.255.255.0` |
 | Fout ingestelde default gateway | Gateway wijkt af van `.1` in het juiste subnet | IP-configuratie controleren | Gateway corrigeren naar `192.168.10.1` of `192.168.20.1` |
 | Dubbel IP-adres | Twee apparaten gebruiken hetzelfde IP-adres | IP-adressen vergelijken en ARP-meldingen controleren | Uniek IP-adres instellen volgens plan |
+| Duplicate-addressmelding op `R1` | `192.168.10.1` stond ook op een ander toestel in het personeelsnetwerk | Foutmelding `%IP-4-DUPADDR` en IP-configuratie van toestellen controleren | Foutief toestel aanpassen zodat alleen `R1 FastEthernet0/0` `192.168.10.1` gebruikt. Zie [Configuratie van R1](configuraties/r1/README.md) |
 | Windows Firewall blokkeert ICMP/ping | ICMP echo requests worden geblokkeerd | Firewallinstellingen controleren | ICMP tijdelijk toestaan volgens klasafspraken |
 | Netwerkadapter van een eindapparaat is uitgeschakeld | Adapter staat disabled | Netwerkinstellingen van het apparaat controleren | Adapter inschakelen |
 | Configuratie werd niet opgeslagen | Running-config is niet naar startup-config geschreven | Na herstart controleren of configuratie behouden bleef | Configuratie opslaan volgens klasafspraken |
@@ -392,6 +393,12 @@ Te configureren:
 ## 13. Resultaten
 
 ### Uitgevoerde configuraties
+
+### Uitgevoerde configuratie R1
+
+De configuratie, password recovery en troubleshooting van de Cisco 1841-router staan afzonderlijk beschreven:
+
+[Configuratie van R1](configuraties/r1/README.md)
 
 ### Uitgevoerde configuratie SW-K-D
 
@@ -425,8 +432,8 @@ De stap-voor-stapconfiguratie van de distributieswitch aan de klantenkant staat 
 
 | Apparaat | Hostname | IP-adres | Fysiek aangesloten | Configuratie opgeslagen | Pingtest geslaagd | Eindstatus | Opmerkingen |
 |---|---|---|---|---|---|---|---|
-| Routerinterface personeelskant | `R1 - interface personeelskant` | `192.168.10.1` | TBD | TBD | TBD | TBD | Routermodel nog onbekend |
-| Routerinterface klantenkant | `R1 - interface klantenkant` | `192.168.20.1` | TBD | TBD | TBD | TBD | Routermodel nog onbekend |
+| Routerinterface personeelskant | `R1 - interface personeelskant` | `192.168.10.1` | TBD | TBD | TBD | TBD | Cisco 1841 Integrated Services Router |
+| Routerinterface klantenkant | `R1 - interface klantenkant` | `192.168.20.1` | TBD | TBD | TBD | TBD | Cisco 1841 Integrated Services Router |
 | Centrale switch personeelskant | `SW-P-D` | `192.168.10.2` | TBD | TBD | TBD | TBD | TBD |
 | Switch kassa en beheer | `SW-P-1` | `192.168.10.3` | TBD | TBD | TBD | TBD | TBD |
 | Switch servers | `SW-P-2` | `192.168.10.4` | TBD | TBD | TBD | TBD | TBD |
@@ -445,12 +452,9 @@ De stap-voor-stapconfiguratie van de distributieswitch aan de klantenkant staat 
 
 ## 14. Openstaande vragen
 
-- Wat is het exacte routermodel?
-- Zijn de routerinterfaces werkelijk `FastEthernet0/1` en `FastEthernet0/2`?
 - Welke IOS-versie draait op de router?
 - Welke IOS-versie draait op de switches?
 - Welke kabeltypes worden exact gebruikt?
-- Welke consolekabel of USB-adapter wordt gebruikt?
 - Moet SSH worden ingesteld?
 - Welke wachtwoorden worden gebruikt?
 - Moeten ongebruikte poorten worden uitgeschakeld?

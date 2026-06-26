@@ -1,3 +1,5 @@
+[← Terug naar documentatieoverzicht](../../README.md)
+
 # Configuratie van SW-K-D
 
 Status: `In uitvoering`  
